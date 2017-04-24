@@ -78,7 +78,7 @@ for m in tqdm(range(maxMode)):
                 file.close()
 
                 # run the new kat file
-                subprocess.run([FINESSEDIR, generateFileName])
+                subprocess.call([FINESSEDIR, generateFileName])
 
                 # crop generated image
                 # GNUplot generates a margin for some reason
