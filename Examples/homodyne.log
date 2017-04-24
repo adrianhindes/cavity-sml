@@ -1,0 +1,14 @@
+
+------------------------------------------------------------------------
+                     FINESSE 2.1                  (build 2.1-4-g71575b0)
+       o_.-=.        Frequency domain INterferomEter Simulation SoftwarE
+      (\'".\|        06.02.2017         http://www.gwoptics.org/finesse/
+      .>' (_--.      
+   _=/d   ,^\        Input file homodyne.kat,
+  ~~ \)-'   '        Output file homodyne.out,
+     / |             Gnuplot file homodyne.gnu 
+    '  '                                        Mon Mar  6 11:38:19 2017
+------------------------------------------------------------------------
+ 
+ writing matlab/python/gnuplot batch files...
+ calling gnuplot...

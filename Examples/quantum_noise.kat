@@ -1,0 +1,75 @@
+%------------------------------------------------------------------------
+% Finesse input file to model a Michelson interferometer
+% with power and signal recycling. The setup is based on
+% the aLIGO reference design, DCC number M060056
+% Daniel Brown 17.05.2014
+%------------------------------------------------------------------------
+ 
+l l1 $Pin 0 nin
+s s1 0 nin nprc1
+# Power recycling mirror
+m1 prm $prmT 37.5u 90 nprc1 nprc2
+s  prc $lprc nprc2 nbsin
+# Central beamsplitter
+bs bs1 .5 .5 0 45 nbsin n0y n0x nbsout
+ 
+# X-arm
+s ichx $lmichx n0x n1x
+m1 itmx $itmT 37.5u 90 n1x n2x
+s armx $Larm n2x n3x
+m1 etmx 5u 37.5u 89.999875 n3x n4x
+attr itmx mass $Mtm zmech sus1
+attr etmx mass $Mtm zmech sus1
+ 
+# Y-arm
+s  ichy $lmichy n0y n1y
+m1 itmy $itmT 37.5u $michy_phi n1y n2y
+s  army $Larm n2y n3y
+m1 etmy 5u 37.5u 0.000125 n3y n4y
+attr itmy mass $Mtm zmech sus1
+attr etmy mass $Mtm zmech sus1
+ 
+# Signal recycling mirror
+s  src $lsrc nbsout nsrc1
+m1 srm $srmT 37.5u $srm_phi nsrc1 nsrc2
+ 
+# Force-to-position transfer function for longitudinal
+# motions of test masses
+tf sus1 1 0 p $mech_fres $mech_Q
+const mech_fres 1  # 9 sus-thermal spike
+const mech_Q    1M # Guess for suspension Q factor
+# DC readout: 100mW = michy_phi 0.07 _or_ darm_phi .00025
+const michy_phi 0 
+const darm_phi  .00025
+ 
+const Larm 3995
+const itmT 0.014
+const srmT 0.2
+const prmT 0.03
+const Pin  125
+const Mtm  40
+const srm_phi -90
+const lmichx 4.5
+const lmichy 4.45
+const lprc   53
+const lsrc   50.525
+ 
+# A squeezed source could be injected into the dark port
+sq sq1 0 0 90 nsrc2
+ 
+# Differentially modulate the arm lengths
+fsig darm  armx 1 0
+fsig darm2 army 1 180
+ 
+# Output the full quantum noise limited sensitivity
+qnoisedS NSR_with_RP    1 $fs nsrc2
+# Output just the shot noise limited sensitivity
+qshotS   NSR_without_RP 1 $fs nsrc2
+ 
+# We could also display the quantum noise and the signal
+# separately by uncommenting these two lines.
+# qnoised noise    $fs nsrc2
+# pd1     signal 1 $fs nsrc2
+ 
+xaxis darm f log 5 5k 1000
+yaxis log abs

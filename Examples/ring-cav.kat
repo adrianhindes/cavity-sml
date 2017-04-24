@@ -1,0 +1,89 @@
+#------------------------------------------------------------------
+# ring-cav.kat test file for Finesse 1.1
+# triangular ring cavity as a mode cleaner
+# http://www.gwoptics.org/finesse/ 
+# 01.11.2013
+# 
+#
+#
+#                                          ,-.
+#                                         (   \  MMC2c
+#                                          \   \
+#    MMC2b                              n6  \   \
+#                                    _,.,--'|\   \
+#     .---,                  _,.,--''       | \   \
+# nn2 |  /  n5      _,,.--'''           n7  |  \_,'
+#     | '   _,,.--''                        |
+# <-- | | +'                                |
+#     | .  '`--...__                        |   _
+#     |  \          `''--...___           n8|  / `-.
+#     `---+  n3                `'---..___   | /   /  MMC2a
+#                                        `'-+/   /
+#                                        n2 /   / <------- 
+#                                          /   /    n1
+#                                         (   /
+#                                          `-'
+#
+#
+
+maxtem 1
+
+# defining an 'ugly' input mode to
+# demonstrate the mode cleaning effect
+l i1 1 0 n0
+tem i1 0 0 1 40			# TEM 00
+tem i1 0 1 1 0			# TEM 01
+tem i1 1 0 1 90			# TEM 10
+
+s s1 1 n0 n1
+
+# input coupler
+bs1 MMC2a 1532u 67u 0 0 n1 nrefl n2 n8  
+
+s sAB 3.9757 n2 n3
+
+bs1 MMC2bi 1360u 58u 0 0 n3 n5 n4 dump	
+attr MMC2bi Rc 6.72
+
+s sBC 3.9757 n5 n6
+
+bs1 MMC2c 114u 62u 0 0 n6 n7 dump dump   	
+
+s sCA 0.15 n7 n8
+
+# The substrate of spherical output coupler
+# serves as a lense for a mode matching telescope
+s sMMC2b 0.05 1.44963 n4 nn1
+m1 MMC2bo 1 0 0 nn1 nn2 
+attr MMC2bo Rc 0.35
+
+s send 1 nn2 nn3  # this is the output node
+
+cav c1 MMC2bi n5 MMC2bi n3
+
+# You can see the mode cleaning effect by
+# comparing the incident beam with the
+# transmitted beam:
+# profile of the incident beam
+#beam b1 n0*
+# profile of the transmitted beam
+beam b1 nn3
+# profile of the reflected beam
+#beam b1 nrefl
+
+xaxis  b1 x lin -3 3 80
+x2axis b1 y lin -3 3 80
+
+gnuterm x11
+pause
+
+GNUPLOT
+set pm3d at s hidden3d 100 solid
+set nosurface
+unset hidden3d
+set colorbox v
+set colorbox user origin .95,.1 size .04,.8
+set style line 100 lt -1 lw 0
+set palette rgbformulae 7,5,15
+unset grid
+END

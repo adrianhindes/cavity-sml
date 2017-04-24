@@ -1,0 +1,42 @@
+#------------------------------------------------------------------
+# pdh.kat test file for Finesse 1.1
+# (Transfer function of the Pound-Drever-Hall signal)
+#
+# http://www.gwoptics.org/finesse/ 
+# 01.11.2013
+# 								  
+# The "#" is used for comment lines. 				  
+#
+#                                                        
+#                        m1                               m2           
+#         .-----.       .-.                               .-.          
+#         |     |       | |      . . . . . . . . . .      | |          
+# --> n1  | EOM | n2 n3 | |  n4  .      s_cav      .  n5  | | 
+#         |     |       | |      . . . . . . . . . .      | |          
+#         `-----'       | |                               | |          
+#                       `-'                               `-'          
+#------------------------------------------------------------------
+
+l i1 1 0 n0                   # laser P=1W f_offset=0Hz
+s s0 1 n0 n1
+mod eo1 40k 0.3 3 pm n1 n2  # phase modulator f_mod=40kHz
+                            # midx=0.3 order=3 
+s s1 1 n2 n3
+
+m m1 0.9999 0.0001 0 n3 n4  # mirror R=0.9999 T=0.0001, phi=0
+s s2 1200 n4 n5             # space  L=1200           
+m m2 1 0 0 n5 dump          # mirror R=1 T=0 phi=0
+				                          
+fsig sig1 m1 10 0           # signal inserted at m1
+                            # f_sig=10Hz phase=0
+pd2 inphase 40k 0 10 n3     # photo diode + 2 mixers:
+                            # first demodulation 40kHz phase=0
+                            # second at 10Hz (no phase ->
+                            # network analyser mode)
+xaxis sig1 f log .01 100 400 # tune f_sig from 0.01 to 100 
+put inphase f2 $x1           # ... together with f2 of 'inphase'
+
+yaxis db:deg                # plot gain in dB and phase
+
+
+

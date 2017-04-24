@@ -1,0 +1,15 @@
+
+------------------------------------------------------------------------
+                     FINESSE 2.1                  (build 2.1-4-g71575b0)
+       o_.-=.        Frequency domain INterferomEter Simulation SoftwarE
+      (\'".\|        06.02.2017         http://www.gwoptics.org/finesse/
+      .>' (_--.      
+   _=/d   ,^\        Input file quantum_noise.kat,
+  ~~ \)-'   '        Output file quantum_noise.out,
+     / |             Gnuplot file quantum_noise.gnu 
+    '  '                                        Mon Mar  6 11:38:45 2017
+------------------------------------------------------------------------
+** Warning: signal might be negative at logarithmic scale.
+ 
+ writing matlab/python/gnuplot batch files...
+ calling gnuplot...
