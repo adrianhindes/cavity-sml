@@ -67,14 +67,15 @@ for m in tqdm(range(maxMode)):
                 colourLine = "set cbrange[0:"+colourRange[c]+"]"
 
                 # replacing lines in .kat
-                with fileinput.FileInput(generateFileName, inplace=True, backup='.bak') as file:
-                        for line in file:
-                            line = line.rstrip()
-                            if "#replaceMode" in line:
-                                line = line.replace("#replaceMode", temLine)
-                            elif "#replaceColour" in line:
-                                line = line.replace("#replaceColour", colourLine)
-                            print(line)
+                file = fileinput.FileInput(generateFileName, inplace=True, backup='.bak')
+                for line in file:
+                    line = line.rstrip()
+                    if "#replaceMode" in line:
+                        line = line.replace("#replaceMode", temLine)
+                    elif "#replaceColour" in line:
+                        line = line.replace("#replaceColour", colourLine)
+                    print(line)
+                file.close()
 
                 # run the new kat file
                 subprocess.run([FINESSEDIR, generateFileName])
