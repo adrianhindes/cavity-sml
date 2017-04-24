@@ -1,10 +1,18 @@
+# Running Finesse
 import subprocess
+# Editing kat file
 import fileinput
+# Copying files
 import shutil
+# Adding Gaussian noise
 from skimage import io, util
+# Navigating directories
 import os
+# Cropping raw images
 from PIL import Image
+# Nice loading bars for loops
 import tqdm
+# Keras preprocessing package for augmentation
 from keras.preprocessing.image import ImageDataGenerator, array_to_img, \
     img_to_array, load_img
 
@@ -19,6 +27,7 @@ Then use Keras preprocessing package to generate modified data
 Then we add noise (after Keras, otherwise wacky things happen)
 Ready to feed into neural network
 '''
+
 FINESSEDIR = "../../finesse/./kat"
 # saturation levels
 colourRange = ['2', '2e-1', '2e-2', '2e-3', '2e-4']
