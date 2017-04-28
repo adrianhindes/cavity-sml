@@ -28,7 +28,7 @@ Then we add noise (after Keras, otherwise wacky things happen)
 Ready to feed into neural network
 '''
 
-FINESSEDIR = "../../finesse/./kat"
+FINESSEDIR = "../Finesse/./kat"
 # saturation levels
 colourRange = ['2', '2e-1', '2e-2', '2e-3', '2e-4']
 colourName = ['0', '1', '2', '3', '4']
@@ -59,8 +59,8 @@ for m in tqdm(range(maxMode)):
 
                 # make and/or change directory
                 if not os.path.exists(dataFolder): os.mkdir(dataFolder)
-                shutil.copy("cavity.kat", 'rawData/'+generateFileName)
-                os.chdir('rawData')
+                shutil.copy("cavity.kat", dataFolder+'/'+generateFileName)
+                os.chdir(dataFolder)
 
                 # generate new lines for .kat
                 temLine = "tem laser "+str(m)+" "+str(n)+" 0.1 0.0" #replace lines
@@ -78,7 +78,7 @@ for m in tqdm(range(maxMode)):
                 file.close()
 
                 # run the new kat file
-                subprocess.call([FINESSEDIR, generateFileName])
+                subprocess.call(['../'+FINESSEDIR, generateFileName])
 
                 # crop generated image
                 # GNUplot generates a margin for some reason
@@ -119,10 +119,8 @@ testDatagen = ImageDataGenerator(
         horizontal_flip=True,
         fill_mode='nearest')
 #
-os.chdir(dataFolder)
-files = os.listdir()
+files = os.listdir(dataFolder)
 imageList = [x for x in files if '.png' in x]
-os.chdir('..')
 
 possibleModes = [str(m)+str(n) for m in range(maxMode) for n in range(maxMode)]
 
