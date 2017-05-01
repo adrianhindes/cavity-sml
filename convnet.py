@@ -111,7 +111,7 @@ convnet = conv_2d(convnet, 32, 5, activation='relu')
 convnet = max_pool_2d(convnet, 5)
 
 convnet = fully_connected(convnet, 1024, activation='relu')
-convnet = dropout(convnet, 0.8)
+convnet = dropout(convnet, 0.5)
 
 convnet = fully_connected(convnet, modeNum*modeNum, activation='softmax')
 convnet = regression(convnet, optimizer='adam', learning_rate=learnRate,
@@ -144,6 +144,6 @@ testingY = [i[1] for i in test]
 
 # Fit the model!
 
-model.fit({'input': X}, {'targets': Y}, n_epoch=2,
+model.fit({'input': X}, {'targets': Y}, n_epoch=50,
           validation_set=({'input': testingX}, {'targets': testingY}),
           snapshot_step=200, show_metric=True, run_id=MODELNAME)
