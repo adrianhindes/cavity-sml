@@ -21,7 +21,7 @@ MODELNAME = 'modeRecog-{}-{}.model'.format(learnRate, '2conv-basic')
 # Maxmimum mode number to train and test for, 0 inclusive
 modeNum = 6
 
-trainSet = 'training.npy'
+trainSet = TRAINDIR+'.npy'
 
 '''
 Assuming data has already been generated from PyKat and Finesse, we now need to go ahead and add images to input features and labels arrays. 
@@ -61,9 +61,9 @@ def createDataArray(dataDirectory):
         dataList.append([arr,label])
     # Shuffle it around for good measure
     shuffle(dataList)
-    name = dataDirectory.split('/')[1]
     # Save so we don't have to do this every time
-    np.save(name+'.npy', dataList)
+    # Will be saved as (name of the folder).npy
+    np.save(dataDirectory+'.npy', dataList)
     return dataList
 
 # Create training data. We will split this later for training and validation
