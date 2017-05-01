@@ -138,7 +138,7 @@ for mode in tqdm(possibleModes):
         array = array.reshape((1,)+array.shape)
         i = 0
         for batch in trainDatagen.flow(array, batch_size=1, save_to_dir=newDataFolder,
-                                       save_prefix=mode, save_format=ext):
+                                       save_prefix=mode, save_format='png'):
             i += 1
             if i > imageNum: break
 
@@ -150,4 +150,5 @@ def noisy(img):
 
 for image in tqdm(newFiles):
     loaded = io.imread(newDataFolder+'/'+image)
-    io.imsave(image, noisy(image))
+    io.imsave(newDataFolder+'/'+image, noisy(image))
+#TEST
