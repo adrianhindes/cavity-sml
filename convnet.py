@@ -53,7 +53,7 @@ def createDataArray(dataDirectory):
         # Label for image
         label = getModes(img)
         # Actually load image
-        img = Image.open(dataDirectory+img).convert('L')
+        img = Image.open(dataDirectory+'/'+img).convert('L')
         # Resize if necessary (commented out since already done in data generation)
         # img = img.resize((IMGSIZE,IMGSIZE))
         arr = np.array(img.getdata(), dtype=np.uint8)
