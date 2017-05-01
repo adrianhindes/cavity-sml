@@ -45,7 +45,7 @@ newDataFolder = 'newData'
 ext = '.png'
 
 # No. images to generate per raw image
-imageNum = 20
+imageNum = 100
 
 
 # loop over m, then n, then colour range
