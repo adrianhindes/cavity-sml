@@ -113,10 +113,12 @@ train = trainData[:-half]
 test = trainData[-half:]
 
 # Reshaping arrays before feeding network
-X = np.array([i[0] for i in train])
+
+
+X = np.array([i[0] for i in train]).reshape(-1,IMGSIZE,IMGSIZE,1)
 Y = [i[1] for i in train]
 
-testingX = np.array([i[0] for i in test])
+testingX = np.array([i[0] for i in test]).reshape(-1,IMGSIZE,IMGSIZE,1)
 testingY = [i[1] for i in test]
 
 # Fit the model!
