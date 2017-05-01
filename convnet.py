@@ -121,7 +121,7 @@ testingY = [i[1] for i in test]
 
 # Fit the model!
 
-model.fit({'input': X}, {'targets': Y}, n_epoch=2,
+model.fit({'input': X}, {'targets': Y}, n_epoch=20,
           validation_set=({'input': testingX}, {'targets': testingY}),
           snapshot_step=200, show_metric=True, run_id=MODELNAME)
 
