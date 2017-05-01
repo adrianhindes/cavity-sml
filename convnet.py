@@ -70,9 +70,8 @@ def createDataArray(dataDirectory):
         # Actually load image
         img = cv2.imread(dataDirectory+'/'+file, cv2.IMREAD_GRAYSCALE)
 
-        # Resize if necessary
-        # Assuming we've already done that in data generation
-        # img = cv2.resize(img, (IMGSIZE, IMGSIZE))
+        # Resize
+        img = cv2.resize(img, (IMGSIZE, IMGSIZE))
 
         # Append image data with label
         dataList.append([np.array(img), label])
