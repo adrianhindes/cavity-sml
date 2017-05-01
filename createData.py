@@ -141,13 +141,13 @@ for mode in tqdm(possibleModes):
                                        save_prefix=mode, save_format=ext):
             i += 1
             if i > imageNum: break
-        print('generated '+image+' set')
 
+newFiles = os.listdir(newDataFolder)
 # Adding noise
 def noisy(img):
     noisy = util.random_noise(loaded, mode='gaussian', clip=True)
     return noisy
 
-for image in tqdm(newDataFolder):
+for image in tqdm(newFiles):
     loaded = io.imread(newDataFolder+'/'+image)
     io.imsave(image, noisy(image))
