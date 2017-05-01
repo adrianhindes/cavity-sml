@@ -1,3 +1,4 @@
 newData/*
 rawData/*
-newData.npy
+*.npy
+log/*
