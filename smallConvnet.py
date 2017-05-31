@@ -15,12 +15,12 @@ learnRate = 1e-3  # Learning rate of neural network
 # Keeping track of our convnet models
 # We'll use TensorBoard to compare
 
-MODELNAME = 'modeRecog-{}-{}.model'.format(learnRate, '2conv-basic')
+MODELNAME = 'smallModes-{}-{}.model'.format(learnRate, '')
 
 # Maxmimum mode number to train and test for, 0 inclusive
 modeNum = 2
 
-trainSet = TRAINDIR+'.npy'
+trainSet = 'small'+TRAINDIR+'.npy'
 
 '''
 Assuming data has already been generated from PyKat and Finesse,
@@ -83,7 +83,7 @@ def createDataArray(dataDirectory):
     shuffle(dataList)
     # Save so we don't have to do this every time
     # Will be saved as (name of the folder).npy
-    np.save(dataDirectory+'.npy', dataList)
+    np.save(trainSet, dataList)
     return dataList
 
 
@@ -98,26 +98,30 @@ else:
 
 convnet = input_data(shape=[None, IMGSIZE, IMGSIZE, 1], name='input')
 
-convnet = conv_2d(convnet, 10, 64, activation='relu', trainable=True)
+convnet = conv_2d(convnet, 16, 64, activation='relu', trainable=True)
+convnet = max_pool_2d(convnet, 16)
+convnet = conv_2d(convnet, 16, 32, activation='relu', trainable=True)
+convnet = max_pool_2d(convnet, 32)
+convnet = conv_2d(convnet, 64, 8, activation='relu', trainable=True)
+convnet = max_pool_2d(convnet,5)
+
+convnet = conv_2d(convnet, 512, 8, activation='relu', trainable=True)
 convnet = max_pool_2d(convnet, 5)
 
-convnet = conv_2d(convnet, 64, 32, activation='relu', trainable=True)
+onvnet = conv_2d(convnet, 512, 8, activation='relu', trainable=True)
 convnet = max_pool_2d(convnet, 5)
 
-convnet = conv_2d(convnet, 128, 8, activation='relu')
+onvnet = conv_2d(convnet, 512, 8, activation='relu', trainable=True)
 convnet = max_pool_2d(convnet, 5)
 
-convnet = conv_2d(convnet, 128, 8, activation='relu')
-convnet = max_pool_2d(convnet, 5)
-
-convnet = conv_2d(convnet, 32, 8, activation='relu')
+convnet = conv_2d(convnet, 512, 8, activation='relu', trainable=True)
 convnet = max_pool_2d(convnet, 5)
 
 convnet = fully_connected(convnet, 1024, activation='relu')
 convnet = dropout(convnet, 0.5)
 
 convnet = fully_connected(convnet, modeNum*modeNum, activation='softmax')
-convnet = regression(convnet, optimizer='momentum', learning_rate=learnRate,
+convnet = regression(convnet, optimizer='adam', learning_rate=learnRate,
                      loss='categorical_crossentropy', name='targets')
 
 
@@ -147,6 +151,6 @@ testingY = [i[1] for i in test]
 
 # Fit the model!
 
-model.fit({'input': X}, {'targets': Y}, n_epoch=50,
+model.fit({'input': X}, {'targets': Y}, n_epoch=200,
           validation_set=({'input': testingX}, {'targets': testingY}),
           snapshot_step=200, show_metric=True, run_id=MODELNAME)

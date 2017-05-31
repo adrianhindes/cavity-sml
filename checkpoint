@@ -1,2 +1,2 @@
-model_checkpoint_path: "/home/adrianh/cavity-sml/modeRecog-0.01-conv-basic.model"
-all_model_checkpoint_paths: "/home/adrianh/cavity-sml/modeRecog-0.01-conv-basic.model"
+model_checkpoint_path: "/home/adrianh/cavity-sml/modeRecog-0.001-final.model"
+all_model_checkpoint_paths: "/home/adrianh/cavity-sml/modeRecog-0.001-final.model"

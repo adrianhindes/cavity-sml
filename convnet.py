@@ -15,9 +15,9 @@ learnRate = 1e-3  # Learning rate of neural network
 # Keeping track of our convnet models
 # We'll use TensorBoard to compare
 
-MODELNAME = 'modeRecog-{}-{}.model'.format(learnRate, 'nopool-momentum')
+MODELNAME = 'modeRecog-{}-{}.model'.format(learnRate, 'final')
 # Number of Epochs to train model for
-trainTime = 50
+trainTime = 100
 
 # Maxmimum mode number to train and test for, 0 inclusive
 modeNum = 6
@@ -97,17 +97,30 @@ else:
 
 convnet = input_data(shape=[None, IMGSIZE, IMGSIZE, 1], name='input')
 
-convnet = conv_2d(convnet, 32, 5, activation='relu', trainable=True)
+convnet = conv_2d(convnet, 30, 5, activation='relu')
+convnet = max_pool_2d(convnet,2)
 
-convnet = conv_2d(convnet, 512, 5, activation='relu')
+convnet = conv_2d(convnet, 30, 5, activation='relu')
+convnet = max_pool_2d(convnet,2)
 
-convnet = conv_2d(convnet, 512, 5, activation='relu')
+convnet = conv_2d(convnet, 30, 5, activation='relu')
+convnet = max_pool_2d(convnet,2)
 
-convnet = conv_2d(convnet, 512, 5, activation='relu')
+convnet = conv_2d(convnet, 30, 5, activation='relu')
+convnet = max_pool_2d(convnet,2)
 
-convnet = conv_2d(convnet, 512, 5, activation='relu')
+convnet = conv_2d(convnet, 30, 5, activation='relu')
+convnet = max_pool_2d(convnet,2)
+
+convnet = conv_2d(convnet, 30, 5, activation='relu')
+convnet = max_pool_2d(convnet,2)
+
+convnet = conv_2d(convnet, 30, 5, activation='relu')
+convnet = max_pool_2d(convnet,2)
+
 
 convnet = fully_connected(convnet, 1024, activation='relu')
+convnet = dropout(convnet,0.1)
 
 convnet = fully_connected(convnet, modeNum*modeNum, activation='softmax')
 convnet = regression(convnet, optimizer='momentum', learning_rate=learnRate,
